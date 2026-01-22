@@ -67,7 +67,7 @@ router.get('/getosztalyzatok', async (request, response) => {
     try {
         const data = await readJsonFile(path.join(__dirname, '../files/erettsegi.json'));
 
-        const eredmenyek = data.vizsgazok.map((vizsgazo) => {
+        const eredmenyek = data.map((vizsgazo) => {
             const irasbeliPont =
                 vizsgazo.Szovegszerkesztes + vizsgazo.Adatbaziskezeles + vizsgazo.Programozas;
             const szobeliPont = vizsgazo.Szobeli;

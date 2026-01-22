@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     fetchData();
+    vizsgazoTablazat();
 });
 
 const getMethodFetch = (url) => {
@@ -18,12 +19,47 @@ const getMethodFetch = (url) => {
         });
 };
 
-
 const fetchData = async () => {
     try {
-        const data = await getMethodFetch ("http://127.0.0.1:3000/api/readfile");
-        const eredmeny = document.getElementById("eredmeny");
-        eredmeny.textContent = `Eredmény: ${data.text}`;
+        const data = await getMethodFetch('http://127.0.0.1:3000/api/getvizsgazok');
+
+        const elsoOszlop = document.getElementById('elsoOszlop');
+
+        const select = document.createElement('select');
+        const option = document.createElement('option');
+        option.innerHTML = 'Még nincs kiválasztott vizsgázó';
+        select.appendChild(option);
+
+        data.vizsgazok.forEach((element) => {
+            const option = document.createElement('option');
+            option.innerHTML = element.Nev;
+            select.appendChild(option);
+        });
+
+        elsoOszlop.replaceChildren(select);
+    } catch (error) {
+        console.error('Hiba történt: ', error);
+    }
+};
+
+const vizsgazoTablazat = async () => {
+    try {
+        const data = await getMethodFetch('http://127.0.0.1:3000/api/getvizsgazok');
+
+        const elsoOszlop = document.getElementById('elsoOszlop');
+
+        const select = document.createElement('select');
+        const option = document.createElement('option');
+        option.innerHTML = 'Még nincs kiválasztott vizsgázó';
+        select.appendChild(option);
+
+        data.vizsgazok.forEach((element) => {
+            const option = document.createElement('option');
+            option.innerHTML = element.Nev;
+            select.appendChild(option);
+        });
+
+        elsoOszlop.replaceChildren(select);
     } catch (error) {
         console.error('Hiba történt: ', error);
     }
